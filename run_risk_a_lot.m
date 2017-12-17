@@ -11,21 +11,31 @@ function [win_pcts, avg_att_lefts, avg_def_lefts, att_devs, def_devs] = run_risk
     count = 100;
   end
 
-  attack_wins = zeros(size(matrices));
-  avg_att_lefts = zeros(size(matrices));
-  avg_def_lefts = zeros(size(matrices));
-  att_devs = zeros(size(matrices));
-  def_devs = zeros(size(matrices));
+  n_methods = size(matrices);
+
+  attack_wins = zeros(n_methods);
+  avg_att_lefts = zeros(n_methods);
+  avg_def_lefts = zeros(n_methods);
+  att_devs = zeros(n_methods);
+  def_devs = zeros(n_methods);
 
   for i = 1:size(matrices)(1)
     if enabled(i)
-      [att_wins, att_left, def_left] = run_with(n_att, n_def, count, matrices{i});
-      attack_wins(i) = att_wins;
-      avg_att_lefts(i) = mean(att_left);
-      att_devs(i) = std(att_left);
+      [att_left, def_left] = run_with(n_att, n_def, count, matrices{i});
+      attack_wins(i) = size(att_left)(1);
+      if size(att_left) ~= 0
+	avg_att_lefts(i) = mean(att_left);
+	att_devs(i) = std(att_left);
+      else
+	avg_att_lefts(i) = NaN();
+	att_devs(i) = NaN();
+      end
       if size(def_left) ~= 0
 	avg_def_lefts(i) = mean(def_left);
 	def_devs(i) = std(def_left);
+      else
+	avg_def_lefts(i) = NaN();
+	def_devs(i) = NaN();
       end
     end
   end
@@ -33,14 +43,12 @@ function [win_pcts, avg_att_lefts, avg_def_lefts, att_devs, def_devs] = run_risk
   win_pcts = attack_wins / count;
 end
 
-function [attack_wins, remaining_for_attack, remaining_for_defense] = run_with(n_att, n_def, count, mat)
-  attack_wins = 0;
+function [remaining_for_attack, remaining_for_defense] = run_with(n_att, n_def, count, mat)
   remaining_for_attack = [];
   remaining_for_defense = [];
   for runs = 1:count
     [result, remaining_for_victor] = run_risk(n_att, n_def, mat);
     if result == 1
-      attack_wins = attack_wins + 1;
       remaining_for_attack = [remaining_for_attack; remaining_for_victor];
     else
       remaining_for_defense = [remaining_for_defense; remaining_for_victor];
