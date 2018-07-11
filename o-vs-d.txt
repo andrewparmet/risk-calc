@@ -1,4 +1,9 @@
-'x' corresponds to an outright win
+An 'x' corresponds to an outright win. The matrix in each section
+represents defending with two dice, and the single column below
+represents defending with one die. The greater fraction of 'x' marks
+out of the total rolls (out of 36 for two dice and out of 6 for one)
+determines whether the dynamic strategy will choose to roll one die
+or two.
 
 offense: 1,1
 
