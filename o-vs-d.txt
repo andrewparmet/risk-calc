@@ -1,9 +1,9 @@
-An 'x' corresponds to an outright win. The matrix in each section
-represents defending with two dice, and the single column below
-represents defending with one die. The greater fraction of 'x' marks
-out of the total rolls (out of 36 for two dice and out of 6 for one)
-determines whether the dynamic strategy will choose to roll one die
-or two.
+An 'x' corresponds to a perfect defense; a blank space means the offense
+wins one or both dice. The matrix in each section represents defending
+with two dice, and the single column below represents defending with one
+die. The greater fraction of 'x' marks out of the total rolls (out of 36
+for two dice and out of 6 for one) determines whether the dynamic strategy
+will choose to roll one die or two.
 
 offense: 1,1
 
@@ -22,6 +22,10 @@ offense: 1,1
 4x
 5x
 6x
+
+------------------------------
+
+36/36 == 6/6, roll two dice. (toss-up)
 
 ##############################
 
@@ -43,6 +47,10 @@ offense: 1,2 or 2,1
 5x
 6x
 
+------------------------------
+
+35/36 > 5/6, roll two dice.
+
 ##############################
 
 offense: 1,3 or 3,1
@@ -62,6 +70,10 @@ offense: 1,3 or 3,1
 4x
 5x
 6x
+
+------------------------------
+
+32/36 > 4/6, roll two dice.
 
 ##############################
 
@@ -83,6 +95,10 @@ offense: 1,4 or 4,1
 5x
 6x
 
+------------------------------
+
+27/36 > 3/6, roll two dice.
+
 ##############################
 
 offense: 1,5 or 5,1
@@ -102,6 +118,10 @@ offense: 1,5 or 5,1
 4
 5x
 6x
+
+------------------------------
+
+20/36 > 2/6, roll two dice.
 
 ##############################
 
@@ -123,6 +143,10 @@ offense: 1,6 or 6,1
 5
 6x
 
+------------------------------
+
+11/36 > 1/6, roll two dice.
+
 ##############################
 
 offense: 2,2
@@ -142,6 +166,10 @@ offense: 2,2
 4x
 5x
 6x
+
+------------------------------
+
+25/36 < 5/6, roll one die. (?!)
 
 ##############################
 
@@ -163,6 +191,10 @@ offense: 2,3 or 3,2
 5x
 6x
 
+------------------------------
+
+24/36 == 4/6, roll two dice. (toss-up)
+
 ##############################
 
 offense: 2,4 or 4,2
@@ -182,6 +214,10 @@ offense: 2,4 or 4,2
 4x
 5x
 6x
+
+------------------------------
+
+21/36 > 3/6, roll two dice.
 
 ##############################
 
@@ -203,6 +239,10 @@ offense: 2,5 or 5,2
 5x
 6x
 
+------------------------------
+
+21/36 > 3/6, roll two dice.
+
 ##############################
 
 offense: 2,6 or 6,2
@@ -222,6 +262,10 @@ offense: 2,6 or 6,2
 4
 5
 6x
+
+------------------------------
+
+9/36 > 1/6, roll two dice.
 
 ##############################
 
@@ -243,6 +287,10 @@ offense: 3,3
 5x
 6x
 
+------------------------------
+
+16/36 < 4/6, roll one die.
+
 ##############################
 
 offense: 3,4 or 4,3
@@ -262,6 +310,10 @@ offense: 3,4 or 4,3
 4x
 5x
 6x
+
+------------------------------
+
+15/36 < 3/6, roll one die.
 
 ##############################
 
@@ -283,6 +335,10 @@ offense: 3,5 or 5,3
 5x
 6x
 
+------------------------------
+
+12/36 == 3/6, roll two dice. (toss-up)
+
 ##############################
 
 offense: 3,6 or 6,3
@@ -302,6 +358,10 @@ offense: 3,6 or 6,3
 4
 5
 6x
+
+------------------------------
+
+7/36 > 1/6, roll two dice.
 
 ##############################
 
@@ -323,6 +383,10 @@ offense: 4,4
 5x
 6x
 
+------------------------------
+
+9/36 < 3/6, roll one die.
+
 ##############################
 
 offense: 4,5 or 5,4
@@ -342,6 +406,10 @@ offense: 4,5 or 5,4
 4
 5x
 6x
+
+------------------------------
+
+8/36 < 2/6, roll one die.
 
 ##############################
 
@@ -363,6 +431,10 @@ offense: 4,6 or 6,4
 5
 6x
 
+------------------------------
+
+5/36 < 1/6, roll one die.
+
 ##############################
 
 offense: 5,5
@@ -382,6 +454,10 @@ offense: 5,5
 4
 5x
 6x
+
+------------------------------
+
+4/36 < 2/6, roll one die.
 
 ##############################
 
@@ -403,6 +479,10 @@ offense: 5,6 or 6,5
 5
 6x
 
+------------------------------
+
+3/36 < 1/6, roll one die.
+
 ##############################
 
 offense: 6,6
@@ -422,3 +502,8 @@ offense: 6,6
 4
 5
 6x
+
+------------------------------
+
+1/36 < 1/6, roll one die.
+
