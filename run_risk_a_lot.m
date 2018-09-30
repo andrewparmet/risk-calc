@@ -1,8 +1,15 @@
 function [win_pcts, avg_att_lefts, avg_def_lefts, att_devs, def_devs] = run_risk_a_lot(n_att, n_def, count, enabled, matrices)
+  # n_att: Number of attacking armies
+  # n_def: Number of defending armies
+  # count: Number of simulations to run
+  # enabled: A vector describing which matrices to test: e.g., [1; 0; 0; 0] will run against "should_roll" and no others
+  # matrices: The decision matrices to use
+
   if nargin < 5
-    matrices = { get_dynamic_roll_mat();
- 		 ones(6, 6) * 2;
-		 ones(6, 6) };
+    matrices = { get_dynamic_roll_mat('should_roll.txt');
+                 get_dynamic_roll_mat('should_roll_joost.txt')
+                 ones(6, 6) * 2;
+                 ones(6, 6) };
   end
   if nargin < 4
     enabled = ones(size(matrices));
@@ -24,18 +31,18 @@ function [win_pcts, avg_att_lefts, avg_def_lefts, att_devs, def_devs] = run_risk
       [att_left, def_left] = run_with(n_att, n_def, count, matrices{i});
       attack_wins(i) = size(att_left)(1);
       if size(att_left) ~= 0
-	avg_att_lefts(i) = mean(att_left);
-	att_devs(i) = std(att_left);
+        avg_att_lefts(i) = mean(att_left);
+        att_devs(i) = std(att_left);
       else
-	avg_att_lefts(i) = NaN();
-	att_devs(i) = NaN();
+        avg_att_lefts(i) = NaN();
+        att_devs(i) = NaN();
       end
       if size(def_left) ~= 0
-	avg_def_lefts(i) = mean(def_left);
-	def_devs(i) = std(def_left);
+        avg_def_lefts(i) = mean(def_left);
+        def_devs(i) = std(def_left);
       else
-	avg_def_lefts(i) = NaN();
-	def_devs(i) = NaN();
+        avg_def_lefts(i) = NaN();
+        def_devs(i) = NaN();
       end
     end
   end
@@ -56,8 +63,8 @@ function [remaining_for_attack, remaining_for_defense] = run_with(n_att, n_def, 
   end
 end
 
-function mat = get_dynamic_roll_mat()
-  f = fopen('should_roll.txt');
+function mat = get_dynamic_roll_mat(fname)
+  f = fopen(fname);
   c = textscan(f, '%d %d %f', 'CollectOutput', 1);
   fclose(f);
   mat = accumarray(c{1}, c{2});
@@ -67,7 +74,7 @@ function [result, remaining_for_victor] = run_risk(attack_count, defense_count, 
   while attack_count > 1 && defense_count > 0
     if attack_count >= 4
       if defense_count >= 2
-	[a_diff, d_diff] = battle_vs_2(3, roll_mat);
+        [a_diff, d_diff] = battle_vs_2(3, roll_mat);
       else
         [a_diff, d_diff] = battle(3, 1);
       end
