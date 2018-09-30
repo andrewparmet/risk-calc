@@ -2,12 +2,14 @@ function [win_pcts, avg_att_lefts, avg_def_lefts, att_devs, def_devs] = run_risk
   # n_att: Number of attacking armies
   # n_def: Number of defending armies
   # count: Number of simulations to run
-  # enabled: A vector describing which matrices to test: e.g., [1; 0; 0; 0] will run against "should_roll" and no others
+  # enabled: A vector describing which matrices to test
+  #   e.g., [1; 0; 0; 0; 0] will run against "should_roll.txt" and no others
   # matrices: The decision matrices to use
 
   if nargin < 5
     matrices = { get_dynamic_roll_mat('should_roll.txt');
                  get_dynamic_roll_mat('should_roll_joost.txt')
+                 get_dynamic_roll_mat('should_roll_ger.txt')
                  ones(6, 6) * 2;
                  ones(6, 6) };
   end

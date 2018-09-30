@@ -1,5 +1,7 @@
 Tries to determine how many dice to roll as a defender in the game of Risk given an attacker's rolls. This takes advantage of the rule that the attacker must roll first and then the defender _gets to choose_ how many dice to roll in response. If the defender chooses to roll only one die, then he will only lose one army if he loses.
 
+Apparently this is a common misprint in the first Dutch edition of the rules; I have seen it once in an English anniversary edition.
+
 ## Examples
 1. Battle 5 attackers against 2 defenders many times for all available selection methods. Matrices describing whether the defender will roll one or two dice (dependent on the attackers' rolls) are contained in various `should_roll.txt` files. 
 
@@ -101,7 +103,7 @@ where the entry at `i,j` indicates how many dice the defender should roll given 
 
 Another possibility for a decision matrix would consider the possibility that it may be advantageous to roll two dice when there is a fair chance of trading 1-and-1 during a battle. Such a decision could also depend on the number of armies the attacker and defender have left to spare and generally might make things much more complicated.
 
-Another author, [Joost Rijneveld](https://github.com/joostrijneveld), hypothesized his own decision matrix [here](https://gist.github.com/joostrijneveld/5b4bbfcf464eba4f9e82):
+[Joost Rijneveld](https://joostrijneveld.nl/) hypothesizes a decision matrix [here](https://gist.github.com/joostrijneveld/5b4bbfcf464eba4f9e82):
 
 ```
      |  1   2   3   4   5   6
@@ -114,38 +116,51 @@ Another author, [Joost Rijneveld](https://github.com/joostrijneveld), hypothesiz
    6 |  2   2   2   2   1   1
 ```
 
+[Ger Koole](http://www.gerkoole.com/) hypothesizes a decision matrix [here](http://www.math.vu.nl/~koole/publications/1994naw/art.pdf):
+
+```
+     |  1   2   3   4   5   6
+  ---+-----------------------
+   1 |  2   2   2   2   2   2
+   2 |  2   2   2   2   2   2
+   3 |  2   2   2   2   2   2
+   4 |  2   2   2   1   1   1
+   5 |  2   2   2   1   1   1
+   6 |  2   2   2   1   1   1
+```
+
 ## Results
 
 Some interesting preliminary results over 10,000 iterations given my dynamic matrix, Joost's matrix, a defender who always throws two dice when they're available, and a defender who always throws one die:
 
 Successful conquer rate (lower percentage corresponds to better defense):
 
-| Attack | Defense | Andrew | Joost |   2  |   1  |
-|-------:|--------:|-------:|------:|-----:|-----:|
-|      5 |       2 |   80.7 |  79.8 | 82.9 | 87.2 |
-|     10 |      10 |   41.2 |  39.6 | 48.1 | 80.1 |
-|     15 |      10 |   79.7 |  77.4 | 84.8 | 98.5 |
-|     25 |      15 |   93.4 |  91.7 | 95.4 | 99.9 |
-|     50 |      50 |   57.7 |  50.1 | 70.5 | 99.8 |
+| Attack | Defense | Andrew | Joost | Ger  |   2  |   1  |
+|-------:|--------:|-------:|------:|-----:|-----:|-----:|
+|      5 |       2 |   80.7 |  79.8 | 79.8 | 82.9 | 87.2 |
+|     10 |      10 |   41.2 |  39.6 | 37.0 | 48.1 | 80.1 |
+|     15 |      10 |   79.7 |  77.4 | 76.6 | 84.8 | 98.5 |
+|     25 |      15 |   93.4 |  91.7 | 90.1 | 95.4 | 99.9 |
+|     50 |      50 |   57.7 |  50.1 | 45.1 | 70.5 | 99.8 |
 
 Average armies the attacker has left when the territory is successfully conquered (lower is better for the defender):
 
-| Attack | Defense |   Andrew   |   Joost    |      2     |      1     |
-|-------:|--------:|-----------:|-----------:|-----------:|-----------:|
-|      5 |       2 |  4.1 (1.0) |  4.0 (1.2) |  4.0 (1.2) |  4.3 (0.8) |
-|     10 |      10 |  4.9 (2.0) |  4.9 (2.0) |  5.2 (2.0) |  5.8 (1.9) |
-|     15 |      10 |  7.7 (3.0) |  7.5 (3.0) |  8.0 (3.1) | 10.0 (2.6) |
-|     25 |      15 | 12.3 (4.6) | 11.9 (4.7) | 13.2 (4.7) | 17.3 (3.4) |
-|     50 |      50 | 10.8 (5.9) | 10.4 (6.0) | 12.7 (6.6) | 24.3 (6.1) |
+| Attack | Defense |   Andrew   |   Joost    |    Ger     |      2     |      1     |
+|-------:|--------:|-----------:|-----------:|-----------:|-----------:|-----------:|
+|      5 |       2 |  4.1 (1.0) |  4.0 (1.2) |  4.1 (1.1) | 4.0 (1.2) |  4.3 (0.8) |
+|     10 |      10 |  4.9 (2.0) |  4.9 (2.0) |  4.8 (2.0) | 5.2 (2.0) |  5.8 (1.9) |
+|     15 |      10 |  7.7 (3.0) |  7.5 (3.0) |  7.4 (3.0) | 8.0 (3.1) | 10.0 (2.6) |
+|     25 |      15 | 12.3 (4.6) | 11.9 (4.7) | 11.6 (4.6) | 13.2 (4.7) | 17.3 (3.4) |
+|     50 |      50 | 10.8 (5.9) | 10.4 (6.0) | 10.0 (5.6) | 12.7 (6.6) | 24.3 (6.1) |
 
 Average armies the defender has left when the territory is fully defended (higher is better for the defender):
 
-| Attack | Defense |   Andrew   |   Joost    |     2     |     1     |
-|-------:|--------:|-----------:|-----------:|----------:|----------:|
-|      5 |       2 |  1.6 (0.5) |  1.7 (0.5) | 1.7 (0.4) | 1.3 (0.5) |
-|     10 |      10 |  4.4 (2.1) |  4.6 (2.2) | 4.4 (2.2) | 3.0 (1.8) |
-|     15 |      10 |  3.3 (1.8) |  3.4 (1.8) | 3.5 (1.8) | 2.2 (1.5) |
-|     25 |      15 |  3.4 (2.0) |  3.6 (2.1) | 3.2 (2.1) | 3.2 (1.0) |
-|     50 |      50 |  8.6 (5.5) |  9.4 (5.9) | 7.9 (5.5) | 3.3 (1.6) |
+| Attack | Defense |   Andrew  |   Joost   |    Ger    |     2     |     1     |
+|-------:|--------:|----------:|----------:|----------:|----------:|----------:|
+|      5 |       2 | 1.6 (0.5) | 1.7 (0.5) | 1.6 (0.5) | 1.7 (0.4) | 1.3 (0.5) |
+|     10 |      10 | 4.4 (2.1) | 4.6 (2.2) | 4.6 (2.2) | 4.4 (2.2) | 3.0 (1.8) |
+|     15 |      10 | 3.3 (1.8) | 3.4 (1.8) | 3.4 (1.8) | 3.5 (1.8) | 2.2 (1.5) |
+|     25 |      15 | 3.4 (2.0) | 3.6 (2.1) | 3.5 (2.1) | 3.2 (2.1) | 3.2 (1.0) |
+|     50 |      50 | 8.6 (5.5) | 9.4 (5.9) | 9.7 (6.0) | 7.9 (5.5) | 3.3 (1.6) |
 
-Looks like Joost's matrix has a slight edge.
+Looks like Ger's matrix has the edge.
